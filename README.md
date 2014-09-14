@@ -37,9 +37,10 @@ Requirements:
 As this setup is intended for demo or development use, secure mode is non and no passphrase is required.
 
 After installation completedly succeeded, go to home directory and run start servers script
-
-	`start_all.sh`
-
+```
+	start_all.sh
+```
 To stop,
-
-	`stop_all.sh`
+```
+	stop_all.sh
+```
