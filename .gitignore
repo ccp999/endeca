@@ -1,0 +1,6 @@
+.DS_Store
+.vagrant
+*.zip
+*.jar
+tmp
+FV29673-01
