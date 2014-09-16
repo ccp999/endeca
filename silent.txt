@@ -1,0 +1,8 @@
+1
+/home/vagrant/Oracle/Middleware_Orch/wlserver_10.3
+endeca_ias
+weblogic
+!2345678
+!2345678
+8401
+endeca-dev.brendan.1pp.hk

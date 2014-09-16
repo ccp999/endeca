@@ -40,7 +40,7 @@ stopIASWLS() {
 		rm -f $TEMPDIR/stopIASWLS.log
 	fi
 
-	/home/vagrant/Oracle/Endeca/IAS/3.1.0/bin/ias-service-shutdown.sh &>  $TEMPDIR/stopIASWLS.log
+	/home/vagrant/Oracle/Middleware_Orch/user_projects/domains/endeca_ias/bin/stopWebLogic.sh &>  $TEMPDIR/stopIASWLS.log
 }
 
 printf "Stopping All-in-one Endeca server..."

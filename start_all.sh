@@ -3,6 +3,7 @@ ORACLE_HOME=/home/vagrant/Oracle/Middleware_Orch
 ENDECA_STUDIO_DOMAIN_NAME=endeca_studio
 ENDECA_SERVER_DOMAIN_NAME=endeca_server
 ENDECA_PS_DOMAIN_NAME=endeca_provisioning
+ENDECA_IAS_DOMAIN_NAME=endeca_ias
 ENDECA_STUDIO_PORT=8101
 ENDECA_SERVER_PORT=7001
 ENDECA_PS_PORT=8201
@@ -126,7 +127,7 @@ startIAS()
 		rm -f  $TEMPDIR/startIAS.log &> /dev/null
 	fi
 
-	/home/vagrant/Oracle/Endeca/IAS/3.1.0/bin/ias-service.sh &>  $TEMPDIR/startIAS.log &
+	$ORACLE_HOME/user_projects/domains/endeca_ias/bin/startWebLogic.sh &>  $TEMPDIR/startIAS.log &
 	START_STATUS=1
 	START_TIMEOUT=300
 	LOG_STATUS=1;
@@ -135,9 +136,9 @@ startIAS()
 		do
 			printf ".";
 			sleep 5
-			curl --proxy "" http://localhost:$ENDECA_IAS_PORT/ias-server/ias/?wsdl 2> /dev/null | grep "IasCrawlerService" 2>&1 > /dev/null
+			curl --proxy "" http://localhost:$ENDECA_IAS_PORT/console/login/LoginForm.jsp 2> /dev/null | grep "WebLogic Server Version: 10.3.6.0" 2>&1 > /dev/null
 			START_STATUS=$?
-			grep "IAS started in RUNNING mode" $TEMPDIR/startIAS.log 2>&1 > /dev/null
+			grep "Server started in RUNNING mode" $ORACLE_HOME/user_projects/domains/$ENDECA_IAS_DOMAIN_NAME/servers/AdminServer/logs/AdminServer.log 2>&1 > /dev/null
 			LOG_STATUS=$?
 			START_TIMEOUT=`expr $START_TIMEOUT - 5`;
 		done

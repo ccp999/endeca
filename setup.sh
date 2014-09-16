@@ -49,10 +49,13 @@ zip -d $HOME/EID/Installers/eidOrch/installers/ofm_appdev_generic_11.1.1.6.0_dis
 cd ..
 rm -rf V29673-01
 # cp /vagrant/Modified-V29673-01.zip ./eidOrch/installers/ofm_appdev_generic_11.1.1.6.0_disk1_1of1.zip
+
+# http://docs.oracle.com/cd/E40518_01/ias.310/ias_install/toc.htm#Installing%20IAS%20silently%20on%20UNIX
 mkdir ias
 cd ias
 unzip /vagrant/V40529-01.zip -d .
 chmod +x ./EID_3.1_IAS.sh
+./EID_3.1.0_IAS.sh  --silent --target /home/vagrant < /vagrant/silent.txt
 cd ..
 
 sudo sed -i "s|127.0.0.1  endeca-dev.brendan.1pp.hk endeca-dev localhost localhost.localdomain localhost4 localhost4.localdomain4|10.0.3.8  endeca-dev.brendan.1pp.hk endeca-dev\n 127.0.0.1  localhost localhost.localdomain localhost4 localhost4.localdomain4|g" /etc/hosts
