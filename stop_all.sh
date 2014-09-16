@@ -35,8 +35,17 @@ stopPSWLS() {
 	$ORACLE_HOME/user_projects/domains/$ENDECA_PS_DOMAIN_NAME/bin/stopWebLogic.sh &>  $TEMPDIR/stopPSWLS.log
 }
 
-printf "Stopping All-in-one Endeca server."
+stopIASWLS() {
+	if [ -e $TEMPDIR/stopIASWLS.log ]; then
+		rm -f $TEMPDIR/stopIASWLS.log
+	fi
+
+	/home/vagrant/Oracle/Endeca/IAS/3.1.0/bin/ias-service-shutdown.sh &>  $TEMPDIR/stopIASWLS.log
+}
+
+printf "Stopping All-in-one Endeca server..."
+stopIASWLS;
 stopPSWLS;
 stopStudioWLS;
 stopServerWLS;
-printf  "Successful.\n";
+printf  "Successfully done!\n";

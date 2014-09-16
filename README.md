@@ -13,7 +13,8 @@ Requirements:
 	V40541-01.zip, 
 	V42127-01.zip, 
 	V29856-01.zip, 
-	V29673-01.zip
+	V29673-01.zip,
+	V40529-01.zip
 
 4. go into the project directory and
 
@@ -34,6 +35,11 @@ Requirements:
 	* Endeca Studio Weblogic domain administrator username and password
 	* Provisioing Service Weblogic domain administrator username and password
 
+7. Installing Integrator Acquisition System(3.1) for Linux x86-64
+```
+	cd $HOME/EID/Installers/ias
+	./EID_3.1_IAS.sh –-target $HOME
+```
 As this setup is intended for demo or development use, secure mode is non and no passphrase is required.
 
 After installation completedly succeeded, go to home directory and run start servers script

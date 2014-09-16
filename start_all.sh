@@ -6,6 +6,7 @@ ENDECA_PS_DOMAIN_NAME=endeca_provisioning
 ENDECA_STUDIO_PORT=8101
 ENDECA_SERVER_PORT=7001
 ENDECA_PS_PORT=8201
+ENDECA_IAS_PORT=8401
 UNAME=weblogic
 UPASS_FIRST=!2345678
 
@@ -117,8 +118,44 @@ startPSWLS()
 
 	printf  "Provisoning Service done\n";
 }
+
+startIAS()
+{
+	if [ -e $TEMPDIR/startIAS.log ]; 
+	then
+		rm -f  $TEMPDIR/startIAS.log &> /dev/null
+	fi
+
+	/home/vagrant/Oracle/Endeca/IAS/3.1.0/bin/ias-service.sh &>  $TEMPDIR/startIAS.log &
+	START_STATUS=1
+	START_TIMEOUT=300
+	LOG_STATUS=1;
+
+	while (( ("$START_STATUS" != 0 || "$LOG_STATUS" != 0) &&  "$START_TIMEOUT" > 0 ))
+		do
+			printf ".";
+			sleep 5
+			curl --proxy "" http://localhost:$ENDECA_IAS_PORT/ias-server/ias/?wsdl 2> /dev/null | grep "IasCrawlerService" 2>&1 > /dev/null
+			START_STATUS=$?
+			grep "IAS started in RUNNING mode" $TEMPDIR/startIAS.log 2>&1 > /dev/null
+			LOG_STATUS=$?
+			START_TIMEOUT=`expr $START_TIMEOUT - 5`;
+		done
+	if [ "$START_TIMEOUT" -lt 1 ];
+	then
+		echo TIMEOUT
+	fi
+
+	if [ "$LOG_STATUS" -ne 0 ]; then
+		printf "Unable to start Endeca IAS Service weblogic server.\n"
+		exit 1
+	fi
+
+	printf  "IAS Service done\n";
+}
 printf "Starting All-in-one Endeca server."
 startServerWLS;
 startStudioWLS;
 startPSWLS;
+startIAS;
 printf  "Successful!\n";

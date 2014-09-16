@@ -22,9 +22,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Set the Timezone to host timezone 
   # https://coderwall.com/p/v8fr2g
   require 'time' 
-  offset = ((Time.zoneoffset(Time.now.zone)/60)/60) 
-  zonesufix = offset >= 0 ? "+#{offset.tos}" : "#{offset.tos}" 
-  timezone = 'Etc/GMT' + zone_sufix 
+  offset = ((Time.zone_offset(Time.now.zone)/60)/60) 
+  zonesufix = offset >= 0 ? "+#{offset.to_s}" : "#{offset.to_s}" 
+  timezone = 'Etc/GMT' + zonesufix 
   config.vm.provision :shell, :inline => "echo \"#{timezone}\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
 
   # if use OS X Host
